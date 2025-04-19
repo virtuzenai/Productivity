@@ -4,6 +4,7 @@ import json
 import time
 import logging
 import random
+from config import ProductionConfig
 from flask import Flask, request, jsonify
 from flask_limiter import Limiter
 from flask_limiter.util import get_remote_address
@@ -464,5 +465,9 @@ def update_preferences():
         return jsonify({"error": "Oops, something went wrong. Let’s try again!"}), 500
 
 if __name__ == "__main__":
-    logger.info("Starting Flask server on http://0.0.0.0:5000")
-    app.run(debug=False, host="0.0.0.0", port=5000)
+    app.config.from_object(DevelopmentConfig)
+    logger.info("Starting Flask server in development mode on http://0.0.0.0:5000")
+    app.run(debug=True, host="0.0.0.0", port=5000)
+else:
+    app.config.from_object(ProductionConfig)
+    logger.info("Starting Flask server in production mode")
