@@ -1,0 +1,5 @@
+.env
+virtuzenai.db
+__pycache__/
+*.pyc
+.venv/
